@@ -17,7 +17,7 @@ export class CourseDialogComponent implements OnInit, AfterViewInit {
   form: FormGroup;
   course: Course;
 
-  @ViewChild('saveButton', { static: true }) saveButton: ElementRef;
+  @ViewChild('saveButton', { static: true, read: ElementRef }) saveButton;
 
   @ViewChild('searchInput', { static: true }) searchInput: ElementRef;
 
@@ -55,12 +55,18 @@ export class CourseDialogComponent implements OnInit, AfterViewInit {
     }));
   }
 
-  save() {
-    throw new Error('Method not implemented.');
+  // save() {
+  //   throw new Error('Method not implemented.');
+  // }
+
+
+  ngAfterViewInit() {
+    fromEvent(this.saveButton.nativeElement, 'click')
+      .pipe(
+        exhaustMap(() => this.saveCourse(this.form.value))
+      )
+    .subscribe();
   }
-
-
-  ngAfterViewInit() { }
 
 
 
