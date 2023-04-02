@@ -24,9 +24,9 @@ import { createHttpObservable } from '../common/util';
 })
 export class CourseComponent implements OnInit, AfterViewInit {
 
+  @ViewChild('searchInput', { static: true }) input: ElementRef;
   course$: Observable<Course>;
   lessons$: Observable<Lesson[]>;
-  @ViewChild('searchInput', { static: true }) input: ElementRef;
 
   constructor(private route: ActivatedRoute) { }
 
@@ -40,13 +40,12 @@ export class CourseComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-
-
-
-
+    fromEvent<KeyboardEvent>(this.input.nativeElement, 'keyup')
+      .pipe(
+        map((event) => (event.target as HTMLInputElement).value),
+        debounceTime(400),
+        distinctUntilChanged()
+      ).subscribe(console.log);
   }
-
-
-
 
 }
