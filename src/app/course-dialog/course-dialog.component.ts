@@ -42,14 +42,10 @@ export class CourseDialogComponent implements OnInit, AfterViewInit {
       .pipe(
         filter(() => this.form.valid),
         concatMap(changes => this.saveCourse(changes))
-
-
       ).subscribe();
-
-
   }
 
-  saveCourse(changes){
+  saveCourse(changes) {
     return fromPromise(fetch(`/api/courses/${this.course.id}`, {
       method: 'PUT',
       body: JSON.stringify(changes),
@@ -64,7 +60,7 @@ export class CourseDialogComponent implements OnInit, AfterViewInit {
   }
 
 
-  ngAfterViewInit() {}
+  ngAfterViewInit() { }
 
 
 
